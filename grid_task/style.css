@@ -1,0 +1,22 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    height: 500px;
+    border: 1px solid black;
+    padding: 20px;
+    place-content: center;
+}
+.item{
+    height: fit-content;
+    /* background-color: gray; */
+    border: 1px solid black;
+}
+.item2{
+    order: 2;
+}

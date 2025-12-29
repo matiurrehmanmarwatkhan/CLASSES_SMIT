@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    max-width: 100%;
+    height: 100vh;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+.child{
+    width: 30%;
+    height: 90vh;
+}
+.child_1{
+    width: 30%;
+    height: 90vh;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.child_1 input{
+    padding: 10px 20px;
+}
+.child_1 button {
+    padding: 10px 10px;
+    background-color: green;
+    border: none;
+    color: whitesmoke;
+}
+.child img {
+    max-width: 100%;
+    height: 90vh;
+}
+.child_1 a{
+ color: green;
+}
+h1{
+    text-align: center;
+    margin-top: 20px;
+}
+.child_1 p{
+    text-align: center;
+}
+.child_1 span{
+    text-align: center;
+}
+.child_1 .image img{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.face{
+    width: 40px;
+    height: 40px;
+    background-color: blue;
+}
+.image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
