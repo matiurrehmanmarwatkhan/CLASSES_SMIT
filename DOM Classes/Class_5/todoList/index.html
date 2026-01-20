@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script async src="script.js"></script>
+    <style>
+        #todoContainer{
+            width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .inputSection{
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            padding: 5px;
+        }
+        .inputSection input{
+            flex-grow: 1;
+            width: 80%;
+            padding: 5px;
+        }
+        .inputSection button{
+            padding: 5px 10px;
+            width: 20%;
+        }
+        #todoList{
+            list-style-type: none;
+            padding: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .classItem{
+            border-radius: 10px;
+            padding: 10px;
+            color: blue;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="todoContainer">
+        <h1>Todo List</h1>
+        <div class="inputSection">
+            <input type="text" id="inputField">
+            <button onclick="addItem()">Add Item</button>
+        </div>
+        <ul id="todoList">
+            <li class="classItem">jsofijsi</li>
+        </ul>
+    </div>
+</body>
+</html>

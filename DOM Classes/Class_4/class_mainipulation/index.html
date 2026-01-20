@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script async src="script.js"></script>
+    <!-- <script async src="script.js"></script> -->
     <style>
-        .container{
+        /* .container{
             width: 200px;
             height: 200px;
             background-color: aqua;
@@ -15,12 +15,40 @@
             width: 400px;
             height: 400px;
             background-color: black;
+        } */
+        .light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        .dark-mode {
+            background-color: black;
+            color: white;
         }
     </style>
 </head>
-<body>
-    <div class="container" id="parentEl" ></div>
-    <button onclick="addClass()">Add Box Class</button>
-    <button onclick="removeClass()">Remove Box Class</button>
+
+<body class="light-mode">
+
+    <button id="changeModeBtn" onclick="changeMode()">Dark Mode</button>
+
+    <script>
+        let changeModeBtn = document.getElementById("changeModeBtn");
+
+        function changeMode() {
+            let body = document.body;
+            let isLight = body.classList.contains("light-mode");
+
+            if (isLight) {
+                changeModeBtn.innerText = "Light Mode";
+                body.classList.add("dark-mode");
+                body.classList.remove("light-mode");
+            } else {
+                changeModeBtn.innerText = "Dark Mode";
+                body.classList.add("light-mode");
+                body.classList.remove("dark-mode");
+            }
+        }
+    </script>
 </body>
 </html>
