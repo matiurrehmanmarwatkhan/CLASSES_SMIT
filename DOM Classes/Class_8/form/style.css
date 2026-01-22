@@ -1,0 +1,48 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+#userForm{
+    width: 300px;
+    height: auto;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#userForm h1{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+#userForm input[type="text"],
+#userForm input[type="email"]{
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+#userForm input[type="submit"]{
+    width: 100%;
+    /* height: 40px; */
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    text-align: center;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
