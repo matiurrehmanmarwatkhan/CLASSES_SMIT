@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Admission Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="script.js"></script>
+</head>
+<body>
+    
+    
+    <form id="admissionForm">
+        
+        <h2>Student Admission Form</h2>
+        <!-- Student Name -->
+        <label>Student Name:</label><br>
+        <input type="text" name="student_name"><br>
+        <div class="error"></div>
+        <br>
+        
+        <!-- Father Name -->
+        <label>Father Name:</label><br>
+        <input type="text" name="father_name"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Phone Number -->
+        <label>Phone Number:</label><br>
+        <input type="tel" name="phone"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Age -->
+        <label>Age:</label><br>
+        <input type="number" name="age" min="1"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Date of Birth -->
+        <label>Date of Birth:</label><br>
+        <input type="date" name="dob"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Profile Image -->
+        <label>Profile Image:</label><br>
+        <input type="file" name="profile_image" accept="image/*"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Gender (Radio Buttons) -->
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male<br>
+        <input type="radio" name="gender" value="Female"> Female<br>
+        <input type="radio" name="gender" value="Other"> Other<br>
+        <div class="error"></div>    
+        <br>
+
+        <!-- Address -->
+        <label>Address:</label><br>
+        <textarea name="address" rows="4" cols="30"></textarea><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Upload CV (PDF) -->
+        <label>Upload CV (PDF only):</label><br>
+        <input type="file" name="cv" accept="application/pdf"><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- City Dropdown -->
+        <label>City:</label><br>
+        <select name="city">
+            <option value="">Select City</option>
+            <option value="Karachi">Karachi</option>
+            <option value="Lahore">Lahore</option>
+            <option value="Islamabad">Islamabad</option>
+            <option value="Peshawar">Peshawar</option>
+            <option value="Quetta">Quetta</option>
+        </select><br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Acknowledgment Checkbox -->
+        <input type="checkbox" name="acknowledgment">
+        I confirm that all the information provided is correct.<br>
+        <div class="error"></div>
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Form</button>
+
+    </form>
+</body>
+</html>

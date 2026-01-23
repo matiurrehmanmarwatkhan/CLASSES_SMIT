@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1e1758;
+}
+
+form{
+    background: #ffffff;
+    width: 420px;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1e1758;
+}
+
+label{
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="file"],
+select,
+textarea{
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+textarea{
+    resize: none;
+}
+
+input[type="radio"]{
+    margin-right: 5px;
+}
+
+.gender{
+    margin-bottom: 15px;
+}
+
+input[type="checkbox"]{
+    margin-right: 8px;
+}
+
+button{
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #1e1758;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #332a8c;
+}
+
+@media (max-width: 480px){
+    form{
+        width: 95%;
+    }
+}
