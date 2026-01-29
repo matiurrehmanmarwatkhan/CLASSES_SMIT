@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Cart UI</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Products */
+.products {
+  display: flex;
+  gap: 20px;
+}
+
+/* Card */
+.card {
+  width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.card button {
+  margin-top: 8px;
+  padding: 8px;
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Cart Icon */
+.cart-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* Cart Screen */
+.cart-screen {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+  padding: 20px;
+  transition: 0.3s;
+  overflow-y: auto;
+}
+
+.cart-screen.active {
+  bottom: 0;
+}
+
+.cart-items {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.remove-btn {
+  margin-top: 8px;
+  padding: 6px;
+  width: 100%;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Cart Icon -->
+<div class="cart-icon" id="cartIcon">
+  🛒 <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- Products -->
+<div class="products">
+  <div class="card" data-name="Mobile Top-Up" data-price="199">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS63uOke6f4dwzbsa1T2KF1Qn9nsHWMBnLNcLGPpNpQLA&s">
+    <h4>PTCL Wifi</h4>
+    <p>₹399</p>
+    <button onclick="addToCart(this)">Add</button>
+  </div>
+  <div class="card" data-name="Mobile Top-Up" data-price="199">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu7XBe_J0Q66QV4tBEH8ioSHro1JUl5Bugn955XHZdYsMaNn5BZ1aSPQ8&s">
+    <h4>Mobile Top-Up</h4>
+    <p>₹599</p>
+    <button onclick="addToCart(this)">Add</button>
+  </div>
+
+</div>
+
+<!-- Cart Screen -->
+<div class="cart-screen" id="cartScreen">
+  <h2>Your Cart</h2>
+  <div class="cart-items" id="cartItems"></div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* Load cart on page load */
+window.onload = function () {
+  updateCartUI();
+};
+
+/* Add product */
+
+
+
+
+
+
+function addToCart(btn) {
+  const card = btn.parentElement;
+  const name = card.dataset.name;
+  const price = card.dataset.price;
+  const image = card.querySelector("img").src;
+
+  // 🔴 Duplicate check
+  const alreadyAdded = cart.some(item => item.name === name);
+  if (alreadyAdded) {
+    alert("Product is already added");
+    return;
+  }
+
+  const product = {
+    name,
+    price,
+    image
+  };
+
+  cart.push(product);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartUI();
+}
+
+
+
+/* Remove product */
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartUI();
+}
+
+/* Update cart UI */
+function updateCartUI() {
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <img src="${item.image}">
+      <h4>${item.name}</h4>
+      <p>₹${item.price}</p>
+      <button class="remove-btn" onclick="removeFromCart(${index})">
+        Remove
+      </button>
+    `;
+
+    cartItems.appendChild(div);
+  });
+
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+/* Cart icon click */
+document.getElementById("cartIcon").addEventListener("click", () => {
+  document.getElementById("cartScreen").classList.toggle("active");
+});
+</script>
+
+</body>
+</html>

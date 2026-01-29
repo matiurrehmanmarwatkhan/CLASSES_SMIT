@@ -10,80 +10,82 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #1e1758;
+    background: linear-gradient(135deg, #6a5af9, #d66efd, #3bc9db);
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 form{
-    background: #ffffff;
-    width: 420px;
-    padding: 25px 30px;
+    background: #fff;
+    width: 340px;
+    padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    animation: fadeUp 5s ease forwards;
+}
+@keyframes fadeUp{
+    from{
+        opacity: 0;
+        transform: translateX(200px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 h2{
     text-align: center;
     margin-bottom: 20px;
-    color: #1e1758;
-}
-
-label{
-    font-weight: 600;
-    display: block;
-    margin-bottom: 6px;
     color: #333;
 }
 
-input[type="text"],
-input[type="tel"],
-input[type="number"],
-input[type="date"],
-input[type="file"],
-select,
-textarea{
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.input-group{
     margin-bottom: 15px;
-    font-size: 14px;
+}
+
+label{
+    font-size: 13px;
+    color: #555;
+}
+
+input, select, textarea{
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
 }
 
 textarea{
     resize: none;
+    height: 80px;
 }
 
-input[type="radio"]{
-    margin-right: 5px;
-}
-
-.gender{
-    margin-bottom: 15px;
-}
-
-input[type="checkbox"]{
-    margin-right: 8px;
+.error{
+    color: red;
+    font-size: 12px;
+    margin-top: 3px;
+    display: block;
 }
 
 button{
     width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 6px;
-    background: #1e1758;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #d66efd, #3bc9db);
     color: #fff;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
-    transition: 0.3s;
+    margin-top: 10px;
 }
 
 button:hover{
-    background: #332a8c;
-}
-
-@media (max-width: 480px){
-    form{
-        width: 95%;
-    }
+    opacity: 0.9;
 }

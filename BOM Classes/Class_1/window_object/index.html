@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" async></script>
+    <style>
+        .msg{
+            border-left: 2px solid gold;
+            padding: 10px 30px;
+            border-radius: 10px;
+            display: none;
+            box-shadow: 1px 1px 5px gray;
+            width: fit-content;
+            position: absolute;
+            bottom: 50%;
+            right: 50%;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="showNotification()">Show Notification</button>
+    <div id="msg" class="msg">
+      <span style="cursor: pointer;" onclick="removecookies()">❌</span> Accept Cookies
+    </div>
+
+    <div class="clock" id="clock"></div>
+
+</body>
+</html>
