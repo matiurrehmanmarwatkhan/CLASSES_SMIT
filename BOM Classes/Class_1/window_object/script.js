@@ -1,27 +1,21 @@
-
-// let msg = document.getElementById("msg");
-
-// function showNotification(){
-//     msg.style.display = "block"
-//     setTimeout(()=>{
-//     msg.style.display = "none";
-//     } , 3000
-//     )
-// }
-
-
-// function removecookies(){
-//     msg.style.display = "none"
-// }
-
-
 let clock = document.getElementById("clock");
+let ampm = document.getElementById("ampm");
+let dateText = document.getElementById("date");
 
-let clockInternal = setInterval(()=>{
-    let date = new Date() ;
-    let mints = date.getMinutes();
-    let hours = date.getHours();
-    let second = date.getSeconds();
-    clock.innerText = `${hours} : ${mints} : ${second}`;
-}
-);
+setInterval(() => {
+    let now = new Date();
+
+    let hours = now.getHours();
+    let minutes = String(now.getMinutes()).padStart(2, "0");
+    let seconds = String(now.getSeconds()).padStart(2, "0");
+
+    let period = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    clock.innerText = `${hours}:${minutes}:${seconds}`;
+    ampm.innerText = period;
+
+    let options = { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' };
+    dateText.innerText = now.toLocaleDateString("en-US", options);
+
+}, 1000);

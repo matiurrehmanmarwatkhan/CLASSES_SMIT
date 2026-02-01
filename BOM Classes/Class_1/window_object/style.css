@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+}
+
+.clock-card {
+    padding: 40px 70px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px rgba(0, 255, 255, 0.25);
+    text-align: center;
+    animation: float 3s ease-in-out infinite;
+}
+
+.time {
+    font-size: 70px;
+    font-weight: 600;
+    color: #00fff0;
+    text-shadow: 0 0 20px rgba(0, 255, 240, 0.8);
+}
+
+.ampm {
+    margin-top: 5px;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #ffffff;
+    opacity: 0.85;
+}
+
+.date {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #ddd;
+    letter-spacing: 1px;
+}
+
+/* Floating animation */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
