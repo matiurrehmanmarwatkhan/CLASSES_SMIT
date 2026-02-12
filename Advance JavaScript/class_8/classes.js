@@ -19,3 +19,7 @@ vehicale1.allProperties();
 let vehicale2 = new Vehicles("Toyata Supra" , "Car" , "2026" , "Black")
 vehicale2.getColor();
 vehicale2.allProperties();
+
+let vehicale3 = new Vehicles("Supra Mkv 4 " , "Car" , "2026" , "White");
+vehicale3.getColor();
+vehicale3.allProperties();
