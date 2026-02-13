@@ -3,20 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var a = "10";
 a = "test";
 var check = true;
-// console.log(check);
+console.log(check);
 var isTrue = 123;
 // isTrue = "test";
-// console.log(isTrue);
-// console.log(a);
+console.log(isTrue);
+console.log(a);
 var b = "test@gmail.com";
-// b = 1234567890;
-// console.log(b);
+b = 1234567890;
+console.log(b);
 var userNames = ["john", 239, true];
-// console.log(userNames);
+console.log(userNames);
 var userDatail = {
-  name: "john",
-  age: 30,
-  isAdmin: true,
+    name: "john",
+    age: 30,
+    isAdmin: true,
 };
 console.log(userDatail.name);
 console.log(userDatail.age);
