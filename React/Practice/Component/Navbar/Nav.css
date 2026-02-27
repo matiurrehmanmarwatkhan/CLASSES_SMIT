@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #e5e4e2;
+  border: 1px solid #4b0082;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: rgba(236, 235, 238, 0.6); /* thora transparent */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+header .logo img {
+  width: 100px;
+}
+header .nav {
+  display: flex;
+  gap: 20px;
+}
+header .nav a {
+  position: relative;
+  text-decoration: none;
+  color: #4b0082;
+  font-size: 24px;
+}
+
+header .headbutton button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  background-color: #4b0082;
+  color: #e5e4e2;
+  cursor: pointer;
+  border-radius: 8px;
+}
+header .headbutton button:hover {
+  background-color: transparent;
+  color: #4b0082;
+  border: 1px solid #4b0082;
+}
+
+/* AFTER – underline effect */
+.nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: #4b0082;
+  left: 0;
+  bottom: -5px;
+  transition: 0.3s;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}

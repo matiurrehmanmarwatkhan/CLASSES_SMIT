@@ -1,15 +1,11 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import Header from "./Header";
-// import "./App.css";
+// import './App.css'
+import Counter from "./Component/Counter";
 
 function App() {
-  return (
-    <div>
-      <Header />
-    </div>
-  );
+  return <Counter />;
 }
 
 export default App;
