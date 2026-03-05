@@ -12,7 +12,7 @@ const Counter = () => {
       <p className="text-2xl text-blue-500">count :{count}</p>
       <button
         onClick={Increment}
-        className="border-2 border-amber-100 p-1 rounded-[12px]"
+        className="border-2 border-amber-100 p-1 rounded-2xl"
       >
         Click Me
       </button>
