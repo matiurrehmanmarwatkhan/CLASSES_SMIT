@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FormPro = () => {
+export const Signup = () => {
   const initialFormData = {
     username: "",
     email: "",
@@ -123,5 +123,3 @@ const FormPro = () => {
     </div>
   );
 };
-
-export default FormPro;

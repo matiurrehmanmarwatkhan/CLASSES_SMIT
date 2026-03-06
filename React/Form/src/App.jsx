@@ -9,9 +9,8 @@ import RegisterProMax from "./RegisterProMax";
 function App() {
   return (
     <div>
-      {/* <Form /> */}
-      {/* <FormPro /> */}
-      <RegisterProMax />
+      <FormPro />
+      {/* <RegisterProMax /> */}
     </div>
   );
 }
