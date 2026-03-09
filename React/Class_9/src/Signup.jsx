@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 
-export const Signup = () => {
+const Signup = () => {
   const initialFormData = {
     username: "",
     email: "",
     password: "",
+  };
+
+  const Validate = (data) => {
+    let error = {};
+
+    if (!data.username) {
+      error.username = "Username is required";
+    } else if (data.username.length < 5) {
+      error.username = "Username must be at least 5 character";
+    }
+
+    if (!data.email) {
+      error.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      error.email = "Invalid email format";
+    }
+
+    if (!data.password) {
+      error.password = "Password is required";
+    } else if (data.password.length < 6) {
+      error.password = "Password must be at least 6 character";
+    }
+    return error;
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -12,54 +35,31 @@ export const Signup = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData(initialFormData);
+
+    const errors = Validate(formData);
+    setErrorData(errors);
+
+    if (Object.keys(errors).length === 0) {
+      console.log("Form Submitted", formData);
+      setFormData(initialFormData);
+    }
   };
 
   const handleChange = (e) => {
     const { value, name } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const UpdateForm = { ...formData, [name]: value };
 
-    // Username validation
-    if (name === "username") {
-      if (value.length === 0) {
-        setErrorData({ ...errorData, username: "Username is required" });
-      } else if (value.length < 5) {
-        setErrorData({ ...errorData, username: "At least 5 characters" });
-      } else {
-        setErrorData({ ...errorData, username: "" });
-      }
-    }
+    setFormData(UpdateForm);
 
-    // Email validation
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (value.length === 0) {
-        setErrorData({ ...errorData, email: "Email is required" });
-      } else if (!emailRegex.test(value)) {
-        setErrorData({ ...errorData, email: "Invalid email format" });
-      } else {
-        setErrorData({ ...errorData, email: "" });
-      }
-    }
-
-    // Password validation
-    if (name === "password") {
-      if (value.length === 0) {
-        setErrorData({ ...errorData, password: "Password is required" });
-      } else if (value.length < 6) {
-        setErrorData({ ...errorData, password: "At least 6 characters" });
-      } else {
-        setErrorData({ ...errorData, password: "" });
-      }
-    }
+    const errors = Validate(UpdateForm);
+    setErrorData(errors);
   };
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <form
         onSubmit={handleSignUp}
-        className="border rounded-2xl shadow-2xl w-[45%] py-5 mt-5 px-7 flex flex-col gap-5"
+        className="border rounded-2xl shadow-2xl w-[25%] py-5 mt-5 px-7 flex flex-col gap-5"
       >
         <h1 className="text-3xl text-center font-semibold mb-5">
           Sign Up Form
@@ -78,7 +78,9 @@ export const Signup = () => {
             value={formData.username}
             className="focus:outline-none border p-2 rounded-lg"
           />
-          <p className="text-red-500 text-sm">{errorData.username}</p>
+          {errorData.username && (
+            <p className="text-red-500">{errorData.username}</p>
+          )}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -94,7 +96,7 @@ export const Signup = () => {
             value={formData.email}
             className="focus:outline-none border p-2 rounded-lg"
           />
-          <p className="text-red-500 text-sm">{errorData.email}</p>
+          {errorData.email && <p className="text-red-500">{errorData.email}</p>}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -110,7 +112,9 @@ export const Signup = () => {
             value={formData.password}
             className="focus:outline-none border p-2 rounded-lg"
           />
-          <p className="text-red-500 text-sm">{errorData.password}</p>
+          {errorData.password && (
+            <p className="text-red-500">{errorData.password}</p>
+          )}
         </div>
 
         <button
@@ -123,3 +127,5 @@ export const Signup = () => {
     </div>
   );
 };
+
+export default Signup;

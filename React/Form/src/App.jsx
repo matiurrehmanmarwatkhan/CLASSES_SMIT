@@ -5,12 +5,14 @@ import viteLogo from "/vite.svg";
 import Form from "./form";
 import FormPro from "./FormPro";
 import RegisterProMax from "./RegisterProMax";
+import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
 
 function App() {
   return (
     <div>
-      <FormPro />
+      {/* <FormPro /> */}
       {/* <RegisterProMax /> */}
+      <EmployeeRegistrationForm />
     </div>
   );
 }
