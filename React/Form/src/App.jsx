@@ -6,13 +6,15 @@ import Form from "./form";
 import FormPro from "./FormPro";
 import RegisterProMax from "./RegisterProMax";
 import EmployeeRegistrationForm from "./EmployeeRegistrationForm";
+import Books from "./Books";
 
 function App() {
   return (
     <div>
       {/* <FormPro /> */}
       {/* <RegisterProMax /> */}
-      <EmployeeRegistrationForm />
+      {/* <EmployeeRegistrationForm /> */}
+      <Books />
     </div>
   );
 }
