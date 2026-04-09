@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>LUXÉ BEAUTY | Premium Cosmetic eCommerce</title>
+    <!-- Google Fonts & Tailwind + Font Awesome CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- React & ReactDOM CDN (for standalone demo, no build) -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+    <style>
+      * {
+        font-family: "Inter", sans-serif;
+      }
+      .font-serif-alt {
+        font-family: "Playfair Display", serif;
+      }
+      body {
+        background: #fefaf7;
+      }
+      /* custom smooth scroll & transition */
+      html {
+        scroll-behavior: smooth;
+      }
+      .product-card:hover {
+        transform: translateY(-6px);
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      }
+      .toast-msg {
+        animation: fadeSlide 0.3s ease forwards;
+      }
+      @keyframes fadeSlide {
+        from {
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .zoom-img {
+        transition: transform 0.2s ease;
+        cursor: zoom-in;
+      }
+      .zoom-img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // ---------- MOCK API / DATA ----------
+      const mockProducts = [
+        {
+          id: 1,
+          name: "Rose Velvet Lipstick",
+          brand: "LUXÉ",
+          price: 38,
+          oldPrice: 52,
+          discount: 27,
+          category: "lipstick",
+          rating: 4.8,
+          reviews: 124,
+          stock: 15,
+          image:
+            "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description:
+            "Long-lasting matte with velvet finish. Infused with rose extract.",
+          ingredients: "Ricinus Communis, Cera Alba, Mica, CI 15850",
+          bestseller: true,
+          new: false,
+          popularity: 98,
+        },
+        {
+          id: 2,
+          name: "Silk Radiance Foundation",
+          price: 54,
+          oldPrice: 68,
+          discount: 20,
+          category: "foundation",
+          rating: 4.9,
+          reviews: 342,
+          stock: 8,
+          image:
+            "https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description: "Luminous coverage, hydrating serum formula.",
+          ingredients: "Aqua, Glycerin, Titanium Dioxide, Squalane",
+          bestseller: true,
+          new: false,
+          popularity: 112,
+        },
+        {
+          id: 3,
+          name: "Noir Intense Perfume",
+          price: 89,
+          oldPrice: 120,
+          discount: 26,
+          category: "perfume",
+          rating: 4.7,
+          reviews: 89,
+          stock: 4,
+          image:
+            "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description: "Woody & floral, elegant signature scent.",
+          ingredients: "Alcohol, Parfum, Limonene, Linalool",
+          bestseller: false,
+          new: true,
+          popularity: 67,
+        },
+        {
+          id: 4,
+          name: "Luminous Blush Duo",
+          price: 29,
+          oldPrice: null,
+          discount: 0,
+          category: "makeup",
+          rating: 4.5,
+          reviews: 203,
+          stock: 22,
+          image:
+            "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description: "Two finishes: matte & shimmer.",
+          bestseller: false,
+          new: true,
+          popularity: 74,
+        },
+        {
+          id: 5,
+          name: "Gold Repair Hair Mask",
+          price: 42,
+          oldPrice: 58,
+          discount: 28,
+          category: "haircare",
+          rating: 4.6,
+          reviews: 177,
+          stock: 12,
+          image:
+            "https://images.unsplash.com/photo-1559599101-f09722fb4948?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description: "Restorative mask with argan & keratin.",
+          bestseller: true,
+          new: false,
+          popularity: 88,
+        },
+        {
+          id: 6,
+          name: "Vitamin C Glow Serum",
+          price: 48,
+          oldPrice: 65,
+          discount: 26,
+          category: "skincare",
+          rating: 4.9,
+          reviews: 412,
+          stock: 18,
+          image:
+            "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700",
+          description: "Brightening & anti-aging serum.",
+          ingredients: "Ascorbic Acid, Hyaluronic Acid",
+          bestseller: false,
+          new: true,
+          popularity: 105,
+        },
+      ];
+
+      let allProducts = [...mockProducts];
+      let currentUser = null; // simple auth state
+      let wishlistItems = []; // store product ids
+      let cartItems = []; // { id, quantity }
+      let orderHistory = []; // placeholder
+      let savedAddresses = [
+        {
+          id: 1,
+          fullName: "Jane Doe",
+          address: "123 Luxury Ave, NY 10001",
+          phone: "+1 555 1234",
+        },
+      ];
+
+      // Helper functions
+      function saveToLocal() {
+        localStorage.setItem("luxe_user", JSON.stringify(currentUser));
+        localStorage.setItem("luxe_wishlist", JSON.stringify(wishlistItems));
+        localStorage.setItem("luxe_cart", JSON.stringify(cartItems));
+        localStorage.setItem("luxe_addresses", JSON.stringify(savedAddresses));
+      }
+      function loadFromLocal() {
+        const user = localStorage.getItem("luxe_user");
+        if (user) currentUser = JSON.parse(user);
+        const wish = localStorage.getItem("luxe_wishlist");
+        if (wish) wishlistItems = JSON.parse(wish);
+        const cart = localStorage.getItem("luxe_cart");
+        if (cart) cartItems = JSON.parse(cart);
+        const addr = localStorage.getItem("luxe_addresses");
+        if (addr) savedAddresses = JSON.parse(addr);
+      }
+      loadFromLocal();
+
+      // Toast system
+      let toastCallback = null;
+      function setToastHandler(handler) {
+        toastCallback = handler;
+      }
+      function showToast(msg, type = "success") {
+        if (toastCallback) toastCallback(msg, type);
+        else alert(msg);
+      }
+
+      // Auth helper
+      function requireAuth(action) {
+        if (!currentUser) {
+          showToast("Please login first to " + action, "error");
+          return false;
+        }
+        return true;
+      }
+
+      // ========== COMPONENTS ==========
+      const Navbar = ({
+        cartCount,
+        wishlistCount,
+        user,
+        onLogout,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+      }) => {
+        const [mobileOpen, setMobileOpen] = React.useState(false);
+        return (
+          <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-pink-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+              <div
+                onClick={() => setPage("home")}
+                className="cursor-pointer flex items-center gap-2"
+              >
+                <i className="fas fa-feather-alt text-rose-400 text-2xl"></i>
+                <span className="font-serif-alt text-2xl tracking-wide text-gray-800">
+                  LUXÉ
+                </span>
+              </div>
+              <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <button
+                  onClick={() => setPage("home")}
+                  className="hover:text-rose-500 transition"
+                >
+                  HOME
+                </button>
+                <button
+                  onClick={() => setPage("products")}
+                  className="hover:text-rose-500 transition"
+                >
+                  SHOP
+                </button>
+                <button
+                  onClick={() => setPage("blog")}
+                  className="hover:text-rose-500 transition"
+                >
+                  BEAUTY TIPS
+                </button>
+                <button
+                  onClick={() => setPage("about")}
+                  className="hover:text-rose-500 transition"
+                >
+                  ABOUT
+                </button>
+                <button
+                  onClick={() => setPage("contact")}
+                  className="hover:text-rose-500 transition"
+                >
+                  CONTACT
+                </button>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="relative hidden md:block flex items-center">
+                  <i className="fas fa-search absolute left-3 top-2 text-gray-400 text-sm"></i>
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search products..."
+                    className="pl-9 pr-3 py-1.5 rounded-full bg-gray-100 text-sm w-44 focus:w-56 transition-all focus:outline-none focus:ring-1 focus:ring-rose-300"
+                  />
+                </div>
+                <button
+                  onClick={() => setPage("wishlist")}
+                  className="relative"
+                >
+                  <i className="far fa-heart text-xl text-gray-700"></i>
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </button>
+                <button onClick={() => setPage("cart")} className="relative">
+                  <i className="fas fa-shopping-bag text-xl text-gray-700"></i>
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
+                </button>
+                {user ? (
+                  <div className="relative group">
+                    <button className="flex items-center gap-1">
+                      <i className="far fa-user-circle text-2xl"></i>
+                      <span className="text-sm hidden md:inline">
+                        {user.name.split(" ")[0]}
+                      </span>
+                    </button>
+                    <div className="absolute right-0 w-40 bg-white shadow-xl rounded-lg hidden group-hover:block p-2 z-20">
+                      <button
+                        onClick={() => {
+                          setPage("profile");
+                          setMobileOpen(false);
+                        }}
+                        className="block w-full text-left px-3 py-2 text-sm hover:bg-rose-50"
+                      >
+                        Dashboard
+                      </button>
+                      <button
+                        onClick={onLogout}
+                        className="block w-full text-left px-3 py-2 text-sm hover:bg-rose-50"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setPage("login")}
+                    className="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-rose-800 transition"
+                  >
+                    Sign In
+                  </button>
+                )}
+                <button
+                  className="md:hidden text-xl"
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                >
+                  <i className="fas fa-bars"></i>
+                </button>
+              </div>
+            </div>
+            {mobileOpen && (
+              <div className="md:hidden bg-white p-4 border-t flex flex-col space-y-3">
+                <button
+                  onClick={() => {
+                    setPage("home");
+                    setMobileOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-rose-500 transition"
+                >
+                  HOME
+                </button>
+                <button
+                  onClick={() => {
+                    setPage("products");
+                    setMobileOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-rose-500 transition"
+                >
+                  SHOP
+                </button>
+                <button
+                  onClick={() => {
+                    setPage("blog");
+                    setMobileOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-rose-500 transition"
+                >
+                  BEAUTY TIPS
+                </button>
+                <button
+                  onClick={() => {
+                    setPage("about");
+                    setMobileOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-rose-500 transition"
+                >
+                  ABOUT
+                </button>
+                <button
+                  onClick={() => {
+                    setPage("contact");
+                    setMobileOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-rose-500 transition"
+                >
+                  CONTACT
+                </button>
+                <div className="relative">
+                  <i className="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                  <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search"
+                    className="w-full pl-9 pr-3 py-1.5 rounded-full bg-gray-100"
+                  />
+                </div>
+              </div>
+            )}
+          </nav>
+        );
+      };
+
+      // Home Page with hero, featured, bestsellers, new arrivals
+      const HomePage = ({
+        setPage,
+        addToCart,
+        addToWishlist,
+        isInWishlist,
+        products,
+      }) => {
+        const featured = products
+          .sort((a, b) => b.popularity - a.popularity)
+          .slice(0, 4);
+        const bestSellers = products.filter((p) => p.bestseller).slice(0, 4);
+        const newArrivals = products.filter((p) => p.new).slice(0, 4);
+        return (
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-rose-100 to-amber-50 mb-16">
+              <div className="p-8 md:p-16 text-center md:text-left flex flex-col md:flex-row items-center justify-between">
+                <div>
+                  <h1 className="font-serif-alt text-5xl md:text-6xl text-gray-800">
+                    Timeless Elegance
+                  </h1>
+                  <p className="text-gray-600 mt-4 max-w-md">
+                    Luxury cosmetics curated for the modern goddess. Discover
+                    radiance.
+                  </p>
+                  <button
+                    onClick={() => setPage("products")}
+                    className="mt-6 bg-black text-white px-8 py-3 rounded-full hover:bg-rose-900 transition"
+                  >
+                    Shop Now
+                  </button>
+                </div>
+                <img
+                  src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"
+                  alt="hero"
+                  className="w-64 h-64 object-contain mt-6 md:mt-0"
+                />
+              </div>
+            </div>
+            <Section
+              title="Featured Icons"
+              items={featured}
+              setPage={setPage}
+              addToCart={addToCart}
+              addToWishlist={addToWishlist}
+              isInWishlist={isInWishlist}
+            />
+            <Section
+              title="Best Sellers"
+              items={bestSellers}
+              setPage={setPage}
+              addToCart={addToCart}
+              addToWishlist={addToWishlist}
+              isInWishlist={isInWishlist}
+            />
+            <Section
+              title="New Arrivals"
+              items={newArrivals}
+              setPage={setPage}
+              addToCart={addToCart}
+              addToWishlist={addToWishlist}
+              isInWishlist={isInWishlist}
+            />
+            <div className="my-16 grid md:grid-cols-2 gap-6">
+              <div className="bg-neutral-900 text-white p-10 rounded-2xl text-center">
+                <h3 className="font-serif-alt text-2xl">Free Shipping</h3>
+                <p>On orders $50+</p>
+              </div>
+              <div className="bg-rose-100 p-10 rounded-2xl text-center">
+                <h3 className="font-serif-alt text-2xl">Luxury Samples</h3>
+                <p>With every purchase</p>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Section = ({
+        title,
+        items,
+        setPage,
+        addToCart,
+        addToWishlist,
+        isInWishlist,
+      }) => (
+        <div className="my-12">
+          <h2 className="font-serif-alt text-3xl mb-6">{title}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {items.map((p) => (
+              <ProductCard
+                key={p.id}
+                product={p}
+                setPage={setPage}
+                addToCart={addToCart}
+                addToWishlist={addToWishlist}
+                isInWishlist={isInWishlist}
+              />
+            ))}
+          </div>
+        </div>
+      );
+
+      const ProductCard = ({
+        product,
+        setPage,
+        addToCart,
+        addToWishlist,
+        isInWishlist,
+      }) => (
+        <div
+          className="product-card bg-white rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer"
+          onClick={() => setPage("product", product)}
+        >
+          <div className="relative">
+            <img src={product.image} className="w-full h-72 object-cover" />
+            {product.discount > 0 && (
+              <span className="absolute top-3 left-3 bg-rose-500 text-white text-xs px-2 py-1 rounded-full">
+                -{product.discount}%
+              </span>
+            )}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                addToWishlist(product);
+              }}
+              className="absolute top-3 right-3 bg-white rounded-full p-2 shadow"
+            >
+              <i
+                className={`${isInWishlist(product.id) ? "fas fa-heart text-rose-500" : "far fa-heart"}`}
+              ></i>
+            </button>
+          </div>
+          <div className="p-4">
+            <h3 className="font-semibold">{product.name}</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-lg font-bold">${product.price}</span>
+              {product.oldPrice && (
+                <span className="text-sm line-through text-gray-400">
+                  ${product.oldPrice}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center text-yellow-400 text-sm">
+              <i className="fas fa-star"></i>
+              <span className="ml-1 text-gray-600">{product.rating}</span>
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                addToCart(product);
+              }}
+              className="mt-3 w-full bg-gray-100 hover:bg-black hover:text-white py-2 rounded-full transition"
+            >
+              Add to Bag
+            </button>
+          </div>
+        </div>
+      );
+
+      // Product Listing (with filters, sorting, search)
+      const ProductListing = ({
+        products,
+        setPage,
+        addToCart,
+        addToWishlist,
+        isInWishlist,
+        searchTerm,
+      }) => {
+        const [category, setCategory] = React.useState("all");
+        const [priceRange, setPriceRange] = React.useState(200);
+        const [sortBy, setSortBy] = React.useState("popularity");
+        let filtered = products.filter(
+          (p) =>
+            p.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+            (category === "all" || p.category === category) &&
+            p.price <= priceRange,
+        );
+        if (sortBy === "price-asc") filtered.sort((a, b) => a.price - b.price);
+        if (sortBy === "price-desc") filtered.sort((a, b) => b.price - a.price);
+        if (sortBy === "rating") filtered.sort((a, b) => b.rating - a.rating);
+        if (sortBy === "newest") filtered.sort((a, b) => b.new - a.new);
+        return (
+          <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/4 bg-white p-5 rounded-2xl shadow-sm h-fit">
+              <h3 className="font-bold mb-3">Category</h3>
+              {[
+                "all",
+                "skincare",
+                "makeup",
+                "lipstick",
+                "foundation",
+                "perfume",
+                "haircare",
+              ].map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setCategory(c)}
+                  className={`block w-full text-left py-1 capitalize ${category === c ? "text-rose-500 font-semibold" : ""}`}
+                >
+                  {c}
+                </button>
+              ))}
+              <h3 className="font-bold mt-4">Max Price: ${priceRange}</h3>
+              <input
+                type="range"
+                min="0"
+                max="200"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+                className="w-full"
+              />
+              <h3 className="font-bold mt-4">Sort by</h3>
+              <select
+                className="w-full p-2 border rounded"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="popularity">Popularity</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Rating</option>
+                <option value="newest">Newest</option>
+              </select>
+            </div>
+            <div className="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filtered.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  setPage={setPage}
+                  addToCart={addToCart}
+                  addToWishlist={addToWishlist}
+                  isInWishlist={isInWishlist}
+                />
+              ))}
+            </div>
+          </div>
+        );
+      };
+
+      // Cart Page
+      const CartPage = ({
+        cartItems: items,
+        products,
+        updateQuantity,
+        removeItem,
+        setPage,
+      }) => {
+        const cartProducts = items.map((i) => ({
+          ...products.find((p) => p.id === i.id),
+          quantity: i.quantity,
+        }));
+        const subtotal = cartProducts.reduce(
+          (s, p) => s + p.price * p.quantity,
+          0,
+        );
+        return (
+          <div className="max-w-5xl mx-auto px-4 py-12">
+            <h1 className="font-serif-alt text-3xl">Shopping Bag</h1>
+            {cartProducts.length === 0 ? (
+              <div className="text-center py-20">
+                <p>Your bag is empty.</p>
+                <button
+                  onClick={() => setPage("products")}
+                  className="mt-4 bg-black text-white px-6 py-2 rounded-full"
+                >
+                  Shop Now
+                </button>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  {cartProducts.map((p) => (
+                    <div
+                      key={p.id}
+                      className="flex flex-wrap justify-between items-center border-b py-4"
+                    >
+                      <img
+                        src={p.image}
+                        className="w-20 h-20 object-cover rounded"
+                      />
+                      <div>
+                        <h3>{p.name}</h3>
+                        <div>${p.price}</div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => updateQuantity(p.id, p.quantity - 1)}
+                          className="px-2 border rounded"
+                        >
+                          -
+                        </button>
+                        <span>{p.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(p.id, p.quantity + 1)}
+                          className="px-2 border rounded"
+                        >
+                          +
+                        </button>
+                        <button
+                          onClick={() => removeItem(p.id)}
+                          className="text-rose-500 ml-4"
+                        >
+                          <i className="fas fa-trash-alt"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 text-right text-2xl font-bold">
+                  Subtotal: ${subtotal.toFixed(2)}
+                  <button
+                    onClick={() => setPage("checkout")}
+                    className="ml-6 bg-black text-white px-8 py-2 rounded-full text-base"
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      // Basic Checkout UI (simulated)
+      const CheckoutPage = ({ cartItems, products, setPage, showToast }) => {
+        if (!requireAuth("checkout")) {
+          setPage("login");
+          return null;
+        }
+        const cartProds = cartItems.map((i) => ({
+          ...products.find((p) => p.id === i.id),
+          quantity: i.quantity,
+        }));
+        const total = cartProds.reduce((s, p) => s + p.price * p.quantity, 0);
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          showToast("Order placed successfully! (demo)", "success");
+          setPage("profile");
+        };
+        return (
+          <div className="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-12">
+            <form onSubmit={handleSubmit}>
+              <h2 className="font-serif-alt text-2xl">Billing Details</h2>
+              <input
+                placeholder="Full name"
+                className="w-full border p-2 mt-2 rounded"
+                required
+              />
+              <input
+                placeholder="Address"
+                className="w-full border p-2 mt-2 rounded"
+              />
+              <input
+                placeholder="City"
+                className="w-full border p-2 mt-2 rounded"
+              />
+              <h3 className="mt-4 font-semibold">Payment Method</h3>
+              <select className="border p-2 w-full">
+                <option>Credit Card</option>
+                <option>PayPal</option>
+                <option>Apple Pay</option>
+              </select>
+              <button
+                type="submit"
+                className="mt-6 bg-black text-white py-3 w-full rounded-full"
+              >
+                Place Order
+              </button>
+            </form>
+            <div className="bg-gray-50 p-6 rounded-2xl">
+              <h3>Order Summary</h3>
+              {cartProds.map((p) => (
+                <div key={p.id} className="flex justify-between py-2">
+                  <span>
+                    {p.name} x{p.quantity}
+                  </span>
+                  <span>${(p.price * p.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+              <div className="border-t pt-3 text-xl font-bold">
+                Total: ${total.toFixed(2)}
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      // Minimal Login/Signup
+      const AuthPage = ({ setUser, setPage }) => {
+        const [isLogin, setIsLogin] = React.useState(true);
+        const [email, setEmail] = React.useState("");
+        const [name, setName] = React.useState("");
+        const handleSubmit = () => {
+          const user = { email, name: name || email.split("@")[0] };
+          setUser(user);
+          showToast(`Welcome ${user.name}!`);
+          setPage("home");
+        };
+        return (
+          <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-2xl shadow">
+            <h2 className="font-serif-alt text-2xl">
+              {isLogin ? "Sign In" : "Create Account"}
+            </h2>
+            {!isLogin && (
+              <input
+                placeholder="Full name"
+                className="w-full border p-2 my-2 rounded"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            )}
+            <input
+              placeholder="Email"
+              className="w-full border p-2 my-2 rounded"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              className="w-full border p-2 my-2 rounded"
+            />
+            <button
+              onClick={handleSubmit}
+              className="bg-black text-white py-2 w-full rounded-full mt-4"
+            >
+              {isLogin ? "Login" : "Sign Up"}
+            </button>
+            <p
+              className="mt-4 text-center cursor-pointer text-rose-500"
+              onClick={() => setIsLogin(!isLogin)}
+            >
+              {isLogin ? "Create account" : "Back to Login"}
+            </p>
+          </div>
+        );
+      };
+
+      // Profile Dashboard
+      const ProfilePage = ({
+        user,
+        orderHistory,
+        savedAddresses,
+        wishlistItems,
+        products,
+        setPage,
+      }) => (
+        <div className="max-w-5xl mx-auto p-6">
+          <h1 className="font-serif-alt text-3xl">
+            Hello, {user && user.name}
+          </h1>
+          <div className="grid md:grid-cols-3 gap-6 mt-8">
+            <div className="bg-white p-5 rounded-xl">
+              <h3 className="font-bold">Order History</h3>
+              <p className="text-gray-500">No orders yet</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl">
+              <h3 className="font-bold">Wishlist ({wishlistItems.length})</h3>
+              {wishlistItems.map((id) => {
+                const p = products.find((p) => p.id === id);
+                return p ? <div key={id}>{p.name}</div> : null;
+              })}
+            </div>
+            <div className="bg-white p-5 rounded-xl">
+              <h3 className="font-bold">Saved Addresses</h3>
+              {savedAddresses.map((a) => (
+                <div key={a.id}>{a.address}</div>
+              ))}
+              <button
+                onClick={() => setPage("checkout")}
+                className="mt-3 text-rose-500"
+              >
+                Checkout
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+
+      // App container
+      const App = () => {
+        const [page, setPageState] = React.useState("home");
+        const [selectedProduct, setSelectedProduct] = React.useState(null);
+        const [searchTerm, setSearchTerm] = React.useState("");
+        const [products, setProducts] = React.useState(allProducts);
+        const [cart, setCart] = React.useState(cartItems);
+        const [wishlist, setWishlist] = React.useState(wishlistItems);
+        const [user, setUser] = React.useState(currentUser);
+        const [toastMsg, setToastMsg] = React.useState(null);
+        const setPage = (p, product = null) => {
+          setPageState(p);
+          if (product) setSelectedProduct(product);
+        };
+        React.useEffect(() => {
+          setProducts(allProducts);
+        }, []);
+        const updateCart = (newCart) => {
+          setCart(newCart);
+          cartItems = newCart;
+          saveToLocal();
+        };
+        const addToCart = (prod) => {
+          if (!requireAuth("add to cart")) {
+            setPage("login");
+            return;
+          }
+          const existing = cart.find((i) => i.id === prod.id);
+          if (existing)
+            updateCart(
+              cart.map((i) =>
+                i.id === prod.id ? { ...i, quantity: i.quantity + 1 } : i,
+              ),
+            );
+          else updateCart([...cart, { id: prod.id, quantity: 1 }]);
+          showToast(`${prod.name} added to cart`);
+        };
+        const updateQuantity = (id, qty) => {
+          if (qty < 1) return updateCart(cart.filter((i) => i.id !== id));
+          updateCart(
+            cart.map((i) => (i.id === id ? { ...i, quantity: qty } : i)),
+          );
+        };
+        const removeItem = (id) => updateCart(cart.filter((i) => i.id !== id));
+        const addToWishlist = (prod) => {
+          if (!requireAuth("wishlist")) {
+            setPage("login");
+            return;
+          }
+          let newWish = wishlist.includes(prod.id)
+            ? wishlist.filter((i) => i !== prod.id)
+            : [...wishlist, prod.id];
+          setWishlist(newWish);
+          wishlistItems = newWish;
+          saveToLocal();
+          showToast(
+            wishlist.includes(prod.id)
+              ? `${prod.name} removed from wishlist`
+              : `${prod.name} added to wishlist`,
+          );
+        };
+        const isInWishlist = (id) => wishlist.includes(id);
+        const handleLogout = () => {
+          setUser(null);
+          currentUser = null;
+          setCart([]);
+          setWishlist([]);
+          localStorage.removeItem("luxe_user");
+          showToast("Logged out");
+          setPage("home");
+        };
+        const handleSetUser = (u) => {
+          setUser(u);
+          currentUser = u;
+          saveToLocal();
+        };
+        const cartCount = cart.reduce((s, i) => s + i.quantity, 0);
+        const wishlistCount = wishlist.length;
+        React.useEffect(() => {
+          if (toastMsg) setTimeout(() => setToastMsg(null), 2500);
+        }, [toastMsg]);
+        const showToastHandler = (msg, type = "success") =>
+          setToastMsg({ msg, type });
+        setToastHandler(showToastHandler);
+        const renderPage = () => {
+          if (page === "home")
+            return (
+              <HomePage
+                setPage={setPage}
+                addToCart={addToCart}
+                addToWishlist={addToWishlist}
+                isInWishlist={isInWishlist}
+                products={products}
+              />
+            );
+          if (page === "products")
+            return (
+              <ProductListing
+                products={products}
+                setPage={setPage}
+                addToCart={addToCart}
+                addToWishlist={addToWishlist}
+                isInWishlist={isInWishlist}
+                searchTerm={searchTerm}
+              />
+            );
+          if (page === "cart")
+            return (
+              <CartPage
+                cartItems={cart}
+                products={products}
+                updateQuantity={updateQuantity}
+                removeItem={removeItem}
+                setPage={setPage}
+              />
+            );
+          if (page === "checkout")
+            return (
+              <CheckoutPage
+                cartItems={cart}
+                products={products}
+                setPage={setPage}
+                showToast={showToastHandler}
+              />
+            );
+          if (page === "login")
+            return <AuthPage setUser={handleSetUser} setPage={setPage} />;
+          if (page === "profile")
+            return (
+              <ProfilePage
+                user={user}
+                orderHistory={orderHistory}
+                savedAddresses={savedAddresses}
+                wishlistItems={wishlist}
+                products={products}
+                setPage={setPage}
+              />
+            );
+          if (page === "wishlist")
+            return (
+              <div className="max-w-7xl mx-auto p-8">
+                <h2>Wishlist</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {wishlist.map((id) => {
+                    let p = products.find((p) => p.id === id);
+                    return p ? (
+                      <ProductCard
+                        key={id}
+                        product={p}
+                        setPage={setPage}
+                        addToCart={addToCart}
+                        addToWishlist={addToWishlist}
+                        isInWishlist={isInWishlist}
+                      />
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            );
+          if (page === "about")
+            return (
+              <div className="max-w-3xl mx-auto p-10">
+                <h1 className="font-serif-alt text-4xl">About LUXÉ</h1>
+                <p className="mt-4 text-gray-600">
+                  Luxury meets nature — we believe in clean, ethical beauty
+                  without compromise.
+                </p>
+              </div>
+            );
+          if (page === "contact")
+            return (
+              <div className="max-w-2xl mx-auto p-8">
+                <h1 className="font-serif-alt text-3xl">Contact Us</h1>
+                <input placeholder="Email" className="border p-2 w-full my-2" />
+                <textarea placeholder="Message" className="border p-2 w-full" />
+                <button className="bg-black text-white py-2 px-6 rounded-full">
+                  Send
+                </button>
+              </div>
+            );
+          if (page === "blog")
+            return (
+              <div className="max-w-5xl mx-auto p-8">
+                <h1 className="font-serif-alt text-3xl">Beauty Tips</h1>
+                <div className="grid md:grid-cols-2 gap-6 mt-6">
+                  <div className="bg-white p-5 rounded-2xl">
+                    <h3>Glow Recipe</h3>
+                    <p>Layer serums for maximum radiance.</p>
+                  </div>
+                  <div className="bg-white p-5 rounded-2xl">
+                    <h3>Lip Care Secrets</h3>
+                    <p>Exfoliate with honey + sugar.</p>
+                  </div>
+                </div>
+              </div>
+            );
+          if (page === "product" && selectedProduct)
+            return (
+              <div className="max-w-6xl mx-auto p-6 grid md:grid-cols-2 gap-10">
+                <div className="overflow-hidden">
+                  <img
+                    src={selectedProduct.image}
+                    className="w-full rounded-2xl zoom-img"
+                  />
+                </div>
+                <div>
+                  <h1 className="font-serif-alt text-4xl">
+                    {selectedProduct.name}
+                  </h1>
+                  <p className="mt-2">{selectedProduct.description}</p>
+                  <p>
+                    <strong>Ingredients:</strong>{" "}
+                    {selectedProduct.ingredients || "N/A"}
+                  </p>
+                  <div className="flex items-center mt-4">
+                    <span className="text-2xl font-bold">
+                      ${selectedProduct.price}
+                    </span>
+                    {selectedProduct.discount > 0 && (
+                      <span className="ml-3 line-through">
+                        ${selectedProduct.oldPrice}
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => addToCart(selectedProduct)}
+                    className="mt-5 bg-black text-white py-3 px-8 rounded-full"
+                  >
+                    Add to Bag
+                  </button>
+                </div>
+              </div>
+            );
+          return (
+            <HomePage
+              setPage={setPage}
+              addToCart={addToCart}
+              addToWishlist={addToWishlist}
+              isInWishlist={isInWishlist}
+              products={products}
+            />
+          );
+        };
+        return (
+          <div className="min-h-screen bg-[#fefaf7]">
+            <Navbar
+              cartCount={cartCount}
+              wishlistCount={wishlistCount}
+              user={user}
+              onLogout={handleLogout}
+              setPage={setPage}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+            />
+            {renderPage()}
+            {toastMsg && (
+              <div className="fixed bottom-5 right-5 bg-gray-900 text-white px-6 py-3 rounded-full shadow-lg toast-msg z-50">
+                {toastMsg.msg}
+              </div>
+            )}
+          </div>
+        );
+      };
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

@@ -6,10 +6,10 @@ const Counter = () => {
   const countValue = useSelector((state) => state.counter);
   const dispatch = useDispatch();
   return (
-    <div>
-      <h2>Counter : {countValue.value}</h2>
+    <div className="p-4">
+      <h2 className="text-2xl mb-4">Counter : {countValue.value}</h2>
       <button
-        className=" rounded p-2 bg-sky-300"
+        className="rounded p-2 bg-sky-300 hover:bg-sky-400 dark:bg-sky-600 dark:hover:bg-sky-700 text-black dark:text-white"
         onClick={() => dispatch(increment())}
       >
         Increment
