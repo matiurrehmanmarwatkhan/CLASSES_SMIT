@@ -4,10 +4,8 @@ import { Button, Text, Loader } from "@mantine/core";
 
 function App() {
   return (
-    <div className="loader">
-      {/* <Text size="xl">Hello Mantine</Text>
-      <Button>Click Me</Button> */}
-      <Loader color="lime" size="xl" type="dots" />
+    <div>
+      <h1 className="text-center text-4xl">Hello Mantine</h1>
     </div>
   );
 }
