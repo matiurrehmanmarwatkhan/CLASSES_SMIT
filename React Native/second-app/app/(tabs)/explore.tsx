@@ -76,6 +76,7 @@ export default function TabTwoScreen() {
           />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
+      {/* <Stack.Screen name="login" options={{ title: "Login" }} /> */}
     </SafeAreaView>
   );
 }

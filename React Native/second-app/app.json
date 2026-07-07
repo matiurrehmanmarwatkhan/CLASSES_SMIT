@@ -1,5 +1,8 @@
 {
   "expo": {
+    "web": {
+      "bundler": "metro"
+    },
     "name": "second-app",
     "slug": "second-app",
     "version": "1.0.0",
